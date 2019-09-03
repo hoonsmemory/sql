@@ -20,16 +20,16 @@ select concat( first_name, ' ', last_name ) AS '전체 이름'
 
 -- 문제3
 -- 여직원과 남직원은 각 각 몇 명이나 있나요?
- select (select count(emp1.gender)
-           from employees emp1
-		  where gender = 'F'
-            and emp1.gender = emp3.gender) as '여자 수'
-	  , (select count(emp2.gender)
-           from employees emp2
-		  where gender = 'M'
-           and emp2.gender = emp3.gender) as '남자 수'
-   from employees emp3
-  group by gender;
+-- select (select count(emp1.gender)
+--           from employees emp1
+--		  where gender = 'F'
+--            and emp1.gender = emp3.gender) as '여자 수'
+--	  , (select count(emp2.gender)
+--           from employees emp2
+--		  where gender = 'M'
+--           and emp2.gender = emp3.gender) as '남자 수'
+--   from employees emp3
+--  group by gender;
 
  select emp2.gender as '성별'
 	  , (select count(*)
