@@ -114,7 +114,7 @@ select ttl.title  as '직책'
    and sal.salary > '50000'
    and sal.to_date = '9999-01-01'
    and ttl.to_date = sal.to_date
-   order by sal.salary;
+   order by sal.salary desc;
  
 -- 문제9.
 -- 현재, 부서별 평균 연봉을 연봉이 큰 부서 순서대로 출력하세요.
