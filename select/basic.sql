@@ -1,5 +1,5 @@
--- select ±âº»
--- employees Å×ÀÌºí¿¡¼­ Á÷¿øÀÇ ÀÌ¸§,  ¼ºº°, ÀÔ»çÀÏÀ» Ãâ·Â
+-- select ê¸°ë³¸
+-- employees í…Œì´ë¸”ì—ì„œ ì§ì›ì˜ ì´ë¦„,  ì„±ë³„, ì…ì‚¬ì¼ì„ ì¶œë ¥
 select first_name
      , last_name
      , gender
@@ -7,75 +7,75 @@ select first_name
   from employees;
 
 -- concat
--- employees Å×ÀÌºí¿¡¼­ Á÷¿øÀÇ ÀüÃ¼ÀÌ¸§,  ¼ºº°, ÀÔ»çÀÏÀ» Ãâ·Â
+-- employees í…Œì´ë¸”ì—ì„œ ì§ì›ì˜ ì „ì²´ì´ë¦„,  ì„±ë³„, ì…ì‚¬ì¼ì„ ì¶œë ¥
 select concat (first_name, ' ', last_name) 
      , gender
      , hire_date
   from employees;
 
 -- alias -> as
--- »ı·« °¡´É
--- employees Å×ÀÌºí¿¡¼­ Á÷¿øÀÇ ÀÌ¸§,  ¼ºº°, ÀÔ»çÀÏÀ» Ãâ·Â
-select concat (first_name, ' ', last_name) as ÀÌ¸§
-     , gender as ¼ºº°
-     ,  hire_date as 'ÀÔ»ç ³¯Â¥'
+-- ìƒëµ ê°€ëŠ¥
+-- employees í…Œì´ë¸”ì—ì„œ ì§ì›ì˜ ì´ë¦„,  ì„±ë³„, ì…ì‚¬ì¼ì„ ì¶œë ¥
+select concat (first_name, ' ', last_name) as ì´ë¦„
+     , gender as ì„±ë³„
+     ,  hire_date as 'ì…ì‚¬ ë‚ ì§œ'
   from employees;
 
--- Áßº¹ Á¦°Å distinct()
+-- ì¤‘ë³µ ì œê±° distinct()
 -- select title from titles;
 select distinct(title) from titles;
   
 -- order by
--- employees Å×ÀÌºí¿¡¼­ Á÷¿øÀÇ ÀüÃ¼ÀÌ¸§,  ¼ºº°, ÀÔ»çÀÏÀ»  ÀÔ»çÀÏ ¼øÀ¸·Î Ãâ·Â
-select concat (first_name, ' ', last_name) as ÀÌ¸§
-     , gender as ¼ºº°
-     ,  hire_date as 'ÀÔ»ç ³¯Â¥'
+-- employees í…Œì´ë¸”ì—ì„œ ì§ì›ì˜ ì „ì²´ì´ë¦„,  ì„±ë³„, ì…ì‚¬ì¼ì„  ì…ì‚¬ì¼ ìˆœìœ¼ë¡œ ì¶œë ¥
+select concat (first_name, ' ', last_name) as ì´ë¦„
+     , gender as ì„±ë³„
+     ,  hire_date as 'ì…ì‚¬ ë‚ ì§œ'
   from employees
  order by hire_date desc;
  
- -- salaries Å×ÀÌºí¿¡¼­ 2001³â ¿ù±ŞÀ» °¡Àå ³ôÀº¼øÀ¸·Î »ç¹ø,  ¿ù±Ş¼øÀ¸·Î Ãâ·Â
+ -- salaries í…Œì´ë¸”ì—ì„œ 2001ë…„ ì›”ê¸‰ì„ ê°€ì¥ ë†’ì€ìˆœìœ¼ë¡œ ì‚¬ë²ˆ,  ì›”ê¸‰ìˆœìœ¼ë¡œ ì¶œë ¥
   SELECT emp_no,salary
 	FROM salaries
    WHERE from_date like '2001-%' 
 ORDER BY salary DESC;
 
--- employees Å×ÀÌºí¿¡¼­ 1991³â ÀÌÀü¿¡ ÀÔ»çÇÑ Á÷¿øÀÇ ÀÌ¸§, ¼ºº°, ÀÔ»çÀÏÀ» Ãâ·Â
+-- employees í…Œì´ë¸”ì—ì„œ 1991ë…„ ì´ì „ì— ì…ì‚¬í•œ ì§ì›ì˜ ì´ë¦„, ì„±ë³„, ì…ì‚¬ì¼ì„ ì¶œë ¥
 
-  SELECT concat( first_name, ' ', last_name ) AS ÀÌ¸§
-       , gender AS ¼ºº°
-       , hire_date AS ÀÔ»çÀÏ
+  SELECT concat( first_name, ' ', last_name ) AS ì´ë¦„
+       , gender AS ì„±ë³„
+       , hire_date AS ì…ì‚¬ì¼
     FROM employees
    WHERE hire_date < '1991-01-01'     
    order by hire_date desc;
 
--- employees Å×ÀÌºí¿¡¼­ 1989³â ÀÌÀü¿¡ ÀÔ»çÇÑ ¿©Á÷¿øÀÇ ÀÌ¸§, ÀÔ»çÀÏÀ» Ãâ·Â
-  SELECT concat( first_name, ' ', last_name ) AS ÀÌ¸§
-       , gender AS ¼ºº°
-       , hire_date AS ÀÔ»çÀÏ
+-- employees í…Œì´ë¸”ì—ì„œ 1989ë…„ ì´ì „ì— ì…ì‚¬í•œ ì—¬ì§ì›ì˜ ì´ë¦„, ì…ì‚¬ì¼ì„ ì¶œë ¥
+  SELECT concat( first_name, ' ', last_name ) AS ì´ë¦„
+       , gender AS ì„±ë³„
+       , hire_date AS ì…ì‚¬ì¼
     FROM employees
    WHERE gender='f'
      AND hire_date < '1989-01-01'
    order by hire_date desc;
 
--- dept_emp Å×ÀÌºí¿¡¼­ ºÎ¼­ ¹øÈ£°¡ d005³ª d009¿¡ ¼ÓÇÑ »ç¿øÀÇ »ç¹ø, ºÎ¼­¹øÈ£ Ãâ·Â
+-- dept_emp í…Œì´ë¸”ì—ì„œ ë¶€ì„œ ë²ˆí˜¸ê°€ d005ë‚˜ d009ì— ì†í•œ ì‚¬ì›ì˜ ì‚¬ë²ˆ, ë¶€ì„œë²ˆí˜¸ ì¶œë ¥
  SELECT emp_no, dept_no    
    FROM dept_emp
   WHERE dept_no in( 'd005', 'd009' );
   
--- like °Ë»ö
--- employees Å×ÀÌºí¿¡¼­ 1989³â¿¡ ÀÔ»çÇÑ Á÷¿øÀÇ ÀÌ¸§, ÀÔ»çÀÏÀ» Ãâ·Â
- SELECT concat( first_name, ' ', last_name ) AS ÀÌ¸§,
-         hire_date AS ÀÔ»çÀÏ
+-- like ê²€ìƒ‰
+-- employees í…Œì´ë¸”ì—ì„œ 1989ë…„ì— ì…ì‚¬í•œ ì§ì›ì˜ ì´ë¦„, ì…ì‚¬ì¼ì„ ì¶œë ¥
+ SELECT concat( first_name, ' ', last_name ) AS ì´ë¦„,
+         hire_date AS ì…ì‚¬ì¼
     FROM employees
    WHERE hire_date <= '1989-12-31'
 	 and hire_date >= '1989-01-01'
    order by hire_date desc;
 
    -- upper
--- 1.ÀÚ¹Ù upperCaseº¸´Ù DBÀÇ uppper() ÇÔ¼ö°¡ ÈÎ¾À ºü¸£´Ù.
--- 2.À¢¸¸ÇÑ DB¿¡¼­ ¹®ÀÚ¿­ Ã³¸®»Ó¸¸ ¾Æ´Ï¶ó Æ÷¸ËÆÃ Ã³¸®µîÀ» ´Ù ÇØÁÖ°í 
--- ÀÚ¹Ù¿¡¼­´Â È­¸é Ãâ·Â¸¸ ÇØ°áÇÑ´Ù.
--- 3. ÀÚ¹Ù ÄÚµå°¡ °£°áÇØ¼­ ÁÁ´Ù.
+-- 1.ìë°” upperCaseë³´ë‹¤ DBì˜ uppper() í•¨ìˆ˜ê°€ í›¨ì”¬ ë¹ ë¥´ë‹¤.
+-- 2.ì›¬ë§Œí•œ DBì—ì„œ ë¬¸ìì—´ ì²˜ë¦¬ë¿ë§Œ ì•„ë‹ˆë¼ í¬ë§·íŒ… ì²˜ë¦¬ë“±ì„ ë‹¤ í•´ì£¼ê³  
+-- ìë°”ì—ì„œëŠ” í™”ë©´ ì¶œë ¥ë§Œ í•´ê²°í•œë‹¤.
+-- 3. ìë°” ì½”ë“œê°€ ê°„ê²°í•´ì„œ ì¢‹ë‹¤.
 
 select upper('Seoul'), lcase('seoul');
 select upper(first_name) from employees;
@@ -86,13 +86,13 @@ select lower('Seoul'), lower('SEOUL');
 -- substring
 select substring('Happy Day',3,2) as substr;
 
-select first_name, substring(hire_date,1, 4) as 'ÀÔ»ç³âµµ'
+select first_name, substring(hire_date,1, 4) as 'ì…ì‚¬ë…„ë„'
   from employees;
 
 -- lpad, rpad
 select lpad('1234', 10, '-'), rpad('1234', 10, '-');
 
--- salaries Å×ÀÌºí¿¡¼­ 2001³â ±Ş¿©°¡ 70000ºÒ ÀÌÇÏÀÇ Á÷¿ø¸¸ »ç¹ø, ±Ş¿©·Î Ãâ·ÂÇÏµÇ ±Ş¿©´Â 10ÀÚ¸®·Î ºÎÁ·ÇÑ ÀÚ¸®¼ö´Â *·Î Ç¥½Ã
+-- salaries í…Œì´ë¸”ì—ì„œ 2001ë…„ ê¸‰ì—¬ê°€ 70000ë¶ˆ ì´í•˜ì˜ ì§ì›ë§Œ ì‚¬ë²ˆ, ê¸‰ì—¬ë¡œ ì¶œë ¥í•˜ë˜ ê¸‰ì—¬ëŠ” 10ìë¦¬ë¡œ ë¶€ì¡±í•œ ìë¦¬ìˆ˜ëŠ” *ë¡œ í‘œì‹œ
 select emp_no 
      , lpad(salary, 10, '*') as salary
   from salaries

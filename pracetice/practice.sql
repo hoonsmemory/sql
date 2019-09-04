@@ -1,88 +1,94 @@
 -- practice01
 
--- ¹®Á¦1
--- »ç¹øÀÌ 10944ÀÎ »ç¿øÀÇ ÀÌ¸§Àº(ÀüÃ¼ ÀÌ¸§)
-select concat( first_name, ' ', last_name ) AS 'ÀüÃ¼ ÀÌ¸§'
+-- ë¬¸ì œ1
+-- ì‚¬ë²ˆì´ 10944ì¸ ì‚¬ì›ì˜ ì´ë¦„ì€(ì „ì²´ ì´ë¦„)
+select concat( first_name, ' ', last_name ) AS 'ì „ì²´ ì´ë¦„'
   from employees 
  where emp_no = 10944;
 
--- ¹®Á¦2
--- ÀüÃ¼Á÷¿øÀÇ ´ÙÀ½ Á¤º¸¸¦ Á¶È¸ÇÏ¼¼¿ä. °¡Àå ¼±ÀÓºÎÅÍ Ãâ·ÂÀÌ µÇµµ·Ï ÇÏ¼¼¿ä. 
--- Ãâ·ÂÀº ÀÌ¸§, ¼ºº°,  ÀÔ»çÀÏ ¼ø¼­ÀÌ°í ¡°ÀÌ¸§¡±, ¡°¼ºº°¡±, ¡°ÀÔ»çÀÏ·Î ÄÃ·³ ÀÌ¸§À» ´ëÃ¼ÇØ º¸¼¼¿ä.
- select concat( emp.first_name, ' ', emp.last_name ) AS 'ÀüÃ¼ ÀÌ¸§'
-	  , emp.gender                                   AS '¼ºº°'
-      , emp.hire_date                                AS 'ÀÔ»çÀÏ'
+-- ë¬¸ì œ2
+-- ì „ì²´ì§ì›ì˜ ë‹¤ìŒ ì •ë³´ë¥¼ ì¡°íšŒí•˜ì„¸ìš”. ê°€ì¥ ì„ ì„ë¶€í„° ì¶œë ¥ì´ ë˜ë„ë¡ í•˜ì„¸ìš”. 
+-- ì¶œë ¥ì€ ì´ë¦„, ì„±ë³„,  ì…ì‚¬ì¼ ìˆœì„œì´ê³  â€œì´ë¦„â€, â€œì„±ë³„â€, â€œì…ì‚¬ì¼ë¡œ ì»¬ëŸ¼ ì´ë¦„ì„ ëŒ€ì²´í•´ ë³´ì„¸ìš”.
+ select concat( emp.first_name, ' ', emp.last_name ) AS 'ì „ì²´ ì´ë¦„' 
+	  , emp.gender                                   AS 'ì„±ë³„'
+      , emp.hire_date                                AS 'ì…ì‚¬ì¼'
    from employees emp
       , titles    ttl
   where emp.emp_no  = ttl.emp_no
     and ttl.to_date = '9999-01-01' 
   order by emp.hire_date asc;
 
--- ¹®Á¦3
--- ¿©Á÷¿ø°ú ³²Á÷¿øÀº °¢ °¢ ¸î ¸íÀÌ³ª ÀÖ³ª¿ä?
--- select (select count(emp1.gender)
---           from employees emp1
---		  where gender = 'F'
---            and emp1.gender = emp3.gender) as '¿©ÀÚ ¼ö'
---	  , (select count(emp2.gender)
---           from employees emp2
---		  where gender = 'M'
---           and emp2.gender = emp3.gender) as '³²ÀÚ ¼ö'
---   from employees emp3
---  group by gender;
+-- ë¬¸ì œ3
+-- ì—¬ì§ì›ê³¼ ë‚¨ì§ì›ì€ ê° ê° ëª‡ ëª…ì´ë‚˜ ìˆë‚˜ìš”?
+ select (select count(emp1.gender)
+           from employees emp1
+		  where emp1.gender = 'F'
+		    and emp3.gender = emp1.gender
+            and rownum = 1) as 'ì—¬ì ìˆ˜'
+	  , (select count(emp2.gender)
+           from employees emp2
+		  where emp2.gender = 'M'
+           and emp3.gender = emp2.gender
+           and rownum = 1) as 'ë‚¨ì ìˆ˜'
+   from employees emp3
+  group by gender;
 
- select emp2.gender as '¼ºº°'
+select count(emp1.gender)
+           from employees emp1
+		  where gender = 'F';
+
+ select emp2.gender as 'ì„±ë³„'
 	  , (select count(*)
            from employees emp1
-		  where emp1.gender = emp2.gender)as 'ÃÑÀÎ¿ø'
+		  where emp1.gender = emp2.gender)as 'ì´ì¸ì›'
    from employees emp2 
   group by gender;
   
--- ¹®Á¦4
--- ÇöÀç ±Ù¹«ÇÏ°í ÀÖ´Â Á÷¿ø ¼ö´Â ¸î ¸íÀÔ´Ï±î? (salaries Å×ÀÌºíÀ» »ç¿ëÇÕ´Ï´Ù.) 
-select count(distinct(emp_no)) as 'ÇöÀç ±Ù¹«ÇÏ°í ÀÖ´Â Á÷¿ø ¼ö'
+-- ë¬¸ì œ4
+-- í˜„ì¬ ê·¼ë¬´í•˜ê³  ìˆëŠ” ì§ì› ìˆ˜ëŠ” ëª‡ ëª…ì…ë‹ˆê¹Œ? (salaries í…Œì´ë¸”ì„ ì‚¬ìš©í•©ë‹ˆë‹¤.) 
+select count(distinct(emp_no)) as 'í˜„ì¬ ê·¼ë¬´í•˜ê³  ìˆëŠ” ì§ì› ìˆ˜'
   from salaries;
 
--- ¹®Á¦5
--- ºÎ¼­´Â ÃÑ ¸î °³°¡ ÀÖ³ª¿ä?
-select count(dept_no) as 'ºÎ¼­ ÃÑ °³¼ö'
+-- ë¬¸ì œ5
+-- ë¶€ì„œëŠ” ì´ ëª‡ ê°œê°€ ìˆë‚˜ìš”?
+select count(dept_no) as 'ë¶€ì„œ ì´ ê°œìˆ˜'
   from departments;
 
--- ¹®Á¦6
--- ÇöÀç ºÎ¼­ ¸Å´ÏÀú´Â ¸î ¸íÀÌ³ª ÀÖ³ª¿ä?(¿ªÀÓ ¸Å³ÊÀú´Â Á¦¿Ü)
-select count(distinct(emp_no)) as 'ÇöÀç ºÎ¼­ ¸Å´ÏÀú'
+-- ë¬¸ì œ6
+-- í˜„ì¬ ë¶€ì„œ ë§¤ë‹ˆì €ëŠ” ëª‡ ëª…ì´ë‚˜ ìˆë‚˜ìš”?(ì—­ì„ ë§¤ë„ˆì €ëŠ” ì œì™¸)
+select count(distinct(emp_no)) as 'í˜„ì¬ ë¶€ì„œ ë§¤ë‹ˆì €'
   from dept_manager
  where to_date = '9999-01-01';
   
--- ¹®Á¦7
--- ÀüÃ¼ ºÎ¼­¸¦ Ãâ·ÂÇÏ·Á°í ÇÕ´Ï´Ù. ¼ø¼­´Â ºÎ¼­ÀÌ¸§ÀÌ ±ä ¼ø¼­´ë·Î Ãâ·ÂÇØ º¸¼¼¿ä.
+-- ë¬¸ì œ7
+-- ì „ì²´ ë¶€ì„œë¥¼ ì¶œë ¥í•˜ë ¤ê³  í•©ë‹ˆë‹¤. ìˆœì„œëŠ” ë¶€ì„œì´ë¦„ì´ ê¸´ ìˆœì„œëŒ€ë¡œ ì¶œë ¥í•´ ë³´ì„¸ìš”.
 select *
   from departments
  order by length(dept_name) desc;
   
--- ¹®Á¦8
--- ÇöÀç ±Ş¿©°¡ 120,000ÀÌ»ó ¹Ş´Â »ç¿øÀº ¸î ¸íÀÌ³ª ÀÖ½À´Ï±î?
-select count(sal.emp_no) as 'ÇöÀç ±Ş¿©°¡ 120,000ÀÌ»ó ¹Ş´Â »ç¿øÀÇ ¼ö'
+-- ë¬¸ì œ8
+-- í˜„ì¬ ê¸‰ì—¬ê°€ 120,000ì´ìƒ ë°›ëŠ” ì‚¬ì›ì€ ëª‡ ëª…ì´ë‚˜ ìˆìŠµë‹ˆê¹Œ?
+select count(sal.emp_no) as 'í˜„ì¬ ê¸‰ì—¬ê°€ 120,000ì´ìƒ ë°›ëŠ” ì‚¬ì›ì˜ ìˆ˜'
   from salaries sal
  where sal.emp_no
    and sal.salary >= 120000
    and sal.to_date = '9999-01-01';
 
--- ¹®Á¦9
--- ¾î¶² Á÷Ã¥µéÀÌ ÀÖ³ª¿ä? Áßº¹ ¾øÀÌ ÀÌ¸§ÀÌ ±ä ¼ø¼­´ë·Î Ãâ·ÂÇØ º¸¼¼¿ä.
-select distinct(title) as 'Á÷Ã¥'
+-- ë¬¸ì œ9
+-- ì–´ë–¤ ì§ì±…ë“¤ì´ ìˆë‚˜ìš”? ì¤‘ë³µ ì—†ì´ ì´ë¦„ì´ ê¸´ ìˆœì„œëŒ€ë¡œ ì¶œë ¥í•´ ë³´ì„¸ìš”.
+select distinct(title) as 'ì§ì±…'
   from titles
  order by length(title) desc;
 
--- ¹®Á¦10
--- ÇöÀç Engineer Á÷Ã¥ÀÇ »ç¿øÀº ÃÑ ¸î ¸íÀÔ´Ï±î?
-select count(emp_no) as 'Á÷Ã¥ÀÇ »ç¿ø¼ö'
+-- ë¬¸ì œ10
+-- í˜„ì¬ Engineer ì§ì±…ì˜ ì‚¬ì›ì€ ì´ ëª‡ ëª…ì…ë‹ˆê¹Œ?
+select count(emp_no) as 'ì§ì±…ì˜ ì‚¬ì›ìˆ˜'
   from titles
  where title = 'Engineer'
    and to_date = '9999-01-01';
 
--- ¹®Á¦11
--- »ç¹øÀÌ 13250(Zeydy)ÀÎ Áö¿øÀÌ Á÷Ã¥ º¯°æ »óÈ²À» ½Ã°£¼øÀ¸·Î Ãâ·ÂÇØº¸¼¼¿ä.
+-- ë¬¸ì œ11
+-- ì‚¬ë²ˆì´ 13250(Zeydy)ì¸ ì§€ì›ì´ ì§ì±… ë³€ê²½ ìƒí™©ì„ ì‹œê°„ìˆœìœ¼ë¡œ ì¶œë ¥í•´ë³´ì„¸ìš”.
 select *
   from titles
  where emp_no = 13250
