@@ -98,6 +98,11 @@ select ttl.emp_no as '사번'
    and ttl.to_date = sal.to_date
  order by sal.salary desc;
  
+ select *
+   from employees
+   where first_name = 'Zvonko'
+     and last_name  = 'Yoshizawa';
+ 
 -- 문제8.
 -- 현재 급여가 50000이 넘는 직책을 직책, 급여로 급여가 큰 순서대로 출력하시오
 -- 급여 50000 넘는 사람의 직책, 급여..
@@ -107,8 +112,9 @@ select ttl.title  as '직책'
  where 1 = 1
    and sal.emp_no = ttl.emp_no
    and sal.salary > '50000'
-   and sal.to_date = '9999-01-01';
- 
+   and sal.to_date = '9999-01-01'
+   and ttl.to_date = sal.to_date
+   order by sal.salary;
  
 -- 문제9.
 -- 현재, 부서별 평균 연봉을 연봉이 큰 부서 순서대로 출력하세요.
