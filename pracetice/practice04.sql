@@ -1,6 +1,6 @@
--- ë¬¸ì œ1.
--- í˜„ì¬ í‰ê·  ì—°ë´‰ë³´ë‹¤ ë§ì€ ì›”ê¸‰ì„ ë°›ëŠ” ì§ì›ì€ ëª‡ ëª…ì´ë‚˜ ìˆìŠµë‹ˆê¹Œ?
-select count(*) as 'í‰ê·  ì—°ë´‰ë³´ë‹¤ ë§ì€ ì›”ê¸‰ ë°›ëŠ” ì§ì› ìˆ˜'
+-- ¹®Á¦1.
+-- ÇöÀç Æò±Õ ¿¬ºÀº¸´Ù ¸¹Àº ¿ù±ŞÀ» ¹Ş´Â Á÷¿øÀº ¸î ¸íÀÌ³ª ÀÖ½À´Ï±î?
+select count(*) as 'Æò±Õ ¿¬ºÀº¸´Ù ¸¹Àº ¿ù±Ş ¹Ş´Â Á÷¿ø ¼ö'
   from employees emp, salaries sal
  where emp.emp_no  = sal.emp_no
    and sal.to_date = '9999-01-01'
@@ -8,12 +8,12 @@ select count(*) as 'í‰ê·  ì—°ë´‰ë³´ë‹¤ ë§ì€ ì›”ê¸‰ ë°›ëŠ” ì§ì› ìˆ˜'
                        from salaries sal2
 					  where sal2.to_date = '9999-01-01');
 
--- ë¬¸ì œ2. 
--- í˜„ì¬, ê° ë¶€ì„œë³„ë¡œ ìµœê³ ì˜ ê¸‰ì—¬ë¥¼ ë°›ëŠ” ì‚¬ì›ì˜ ì‚¬ë²ˆ, ì´ë¦„, ë¶€ì„œ, ì—°ë´‰ì„ ì¡°íšŒí•˜ì„¸ìš”. ë‹¨ ì¡°íšŒê²°ê³¼ëŠ” ì—°ë´‰ì˜ ë‚´ë¦¼ì°¨ìˆœìœ¼ë¡œ ì •ë ¬ë˜ì–´ ë‚˜íƒ€ë‚˜ì•¼ í•©ë‹ˆë‹¤. 
-select emp.emp_no                                  as 'ì‚¬ë²ˆ'
-     , concat( emp.first_name, ' ', emp.last_name) as 'ì´ë¦„'
-     , max(sal.salary)                             as 'ì—°ë´‰'
-     , dept.dept_name                              as 'ë¶€ì„œëª…'
+-- ¹®Á¦2. 
+-- ÇöÀç, °¢ ºÎ¼­º°·Î ÃÖ°íÀÇ ±Ş¿©¸¦ ¹Ş´Â »ç¿øÀÇ »ç¹ø, ÀÌ¸§, ºÎ¼­, ¿¬ºÀÀ» Á¶È¸ÇÏ¼¼¿ä. ´Ü Á¶È¸°á°ú´Â ¿¬ºÀÀÇ ³»¸²Â÷¼øÀ¸·Î Á¤·ÄµÇ¾î ³ªÅ¸³ª¾ß ÇÕ´Ï´Ù. 
+select emp.emp_no                                  as '»ç¹ø'
+     , concat( emp.first_name, ' ', emp.last_name) as 'ÀÌ¸§'
+     , max(sal.salary)                             as '¿¬ºÀ'
+     , dept.dept_name                              as 'ºÎ¼­¸í'
   from dept_emp demp, employees emp, salaries sal, departments dept
  where 1 = 1
    and emp.emp_no  = sal.emp_no
@@ -32,12 +32,12 @@ select emp.emp_no                                  as 'ì‚¬ë²ˆ'
 group by demp.dept_no
 order by max(sal.salary) desc;
 
--- ë¬¸ì œ3.
--- í˜„ì¬, ìì‹ ì˜ ë¶€ì„œ í‰ê·  ê¸‰ì—¬ë³´ë‹¤ ì—°ë´‰(salary)ì´ ë§ì€ ì‚¬ì›ì˜ ì‚¬ë²ˆ, ì´ë¦„ê³¼ ì—°ë´‰ì„ ì¡°íšŒí•˜ì„¸ìš” 
-select emp.emp_no                                 as 'ì‚¬ë²ˆ'
-     , demp.dept_no                               as 'ì‚¬ë²ˆ'
-     , concat(emp.first_name, ' ', emp.last_name) as 'ì´ë¦„'
-     , sal.salary                                 as 'ì—°ë´‰'
+-- ¹®Á¦3.
+-- ÇöÀç, ÀÚ½ÅÀÇ ºÎ¼­ Æò±Õ ±Ş¿©º¸´Ù ¿¬ºÀ(salary)ÀÌ ¸¹Àº »ç¿øÀÇ »ç¹ø, ÀÌ¸§°ú ¿¬ºÀÀ» Á¶È¸ÇÏ¼¼¿ä 
+select emp.emp_no                                 as '»ç¹ø'
+     , demp.dept_no                               as '»ç¹ø'
+     , concat(emp.first_name, ' ', emp.last_name) as 'ÀÌ¸§'
+     , sal.salary                                 as '¿¬ºÀ'
   from employees emp, salaries sal, dept_emp demp, (select dept2.dept_no    as fromno
 														 , avg(sal2.salary) as avgs
 													  from departments dept2, dept_emp demp2, salaries sal2
@@ -56,12 +56,12 @@ select emp.emp_no                                 as 'ì‚¬ë²ˆ'
    and demp.dept_no = avg_t.fromno;
 		
 		
--- ë¬¸ì œ4.
--- í˜„ì¬, ì‚¬ì›ë“¤ì˜ ì‚¬ë²ˆ, ì´ë¦„, ë§¤ë‹ˆì € ì´ë¦„, ë¶€ì„œ ì´ë¦„ìœ¼ë¡œ ì¶œë ¥í•´ ë³´ì„¸ìš”.
-select emp.emp_no as 'ì‚¬ë²ˆ'
-     , concat(emp.first_name, ' ', emp.last_name) as 'ì´ë¦„'
-     , dept.dept_name as 'ë¶€ì„œ'
-     , mgr_t.mgrn as 'ë§¤ë‹ˆì €'
+-- ¹®Á¦4.
+-- ÇöÀç, »ç¿øµéÀÇ »ç¹ø, ÀÌ¸§, ¸Å´ÏÀú ÀÌ¸§, ºÎ¼­ ÀÌ¸§À¸·Î Ãâ·ÂÇØ º¸¼¼¿ä.
+select emp.emp_no as '»ç¹ø'
+     , concat(emp.first_name, ' ', emp.last_name) as 'ÀÌ¸§'
+     , dept.dept_name as 'ºÎ¼­'
+     , mgr_t.mgrn as '¸Å´ÏÀú'
  from employees emp, dept_emp demp, departments dept ,(select dept2.dept_no as mgrdno
                                                             , concat(emp2.first_name, ' ', emp2.last_name) as mgrn
 														 from employees emp2, dept_manager dmgr2, departments dept2
@@ -75,12 +75,12 @@ select emp.emp_no as 'ì‚¬ë²ˆ'
    and demp.to_date = '9999-01-01'
  order by emp.emp_no;
  
--- ë¬¸ì œ5.
--- í˜„ì¬, í‰ê· ì—°ë´‰ì´ ê°€ì¥ ë†’ì€ ë¶€ì„œì˜ ì‚¬ì›ë“¤ì˜ ì‚¬ë²ˆ, ì´ë¦„, ì§ì±…, ì—°ë´‰ì„ ì¡°íšŒí•˜ê³  ì—°ë´‰ ìˆœìœ¼ë¡œ ì¶œë ¥í•˜ì„¸ìš”.
-select emp.emp_no                                   as 'ì‚¬ë²ˆ'
-     , concat(emp.first_name, ' ', emp.last_name)   as 'ì´ë¦„'
-     , ttl.title                                    as 'ì§ì±…'
-     , sal.salary                                   as 'ì—°ë´‰'
+-- ¹®Á¦5.
+-- ÇöÀç, Æò±Õ¿¬ºÀÀÌ °¡Àå ³ôÀº ºÎ¼­ÀÇ »ç¿øµéÀÇ »ç¹ø, ÀÌ¸§, Á÷Ã¥, ¿¬ºÀÀ» Á¶È¸ÇÏ°í ¿¬ºÀ ¼øÀ¸·Î Ãâ·ÂÇÏ¼¼¿ä.
+select emp.emp_no                                   as '»ç¹ø'
+     , concat(emp.first_name, ' ', emp.last_name)   as 'ÀÌ¸§'
+     , ttl.title                                    as 'Á÷Ã¥'
+     , sal.salary                                   as '¿¬ºÀ'
   from employees emp, titles ttl, salaries sal, dept_emp demp
  where 1 = 1
    and emp.emp_no   = ttl.emp_no 
@@ -101,8 +101,8 @@ select emp.emp_no                                   as 'ì‚¬ë²ˆ'
 						limit 0, 1)
 order by sal.salary desc;
    
--- ë¬¸ì œ6.
--- í‰ê·  ì—°ë´‰ì´ ê°€ì¥ ë†’ì€ ë¶€ì„œëŠ”? 
+-- ¹®Á¦6.
+-- Æò±Õ ¿¬ºÀÀÌ °¡Àå ³ôÀº ºÎ¼­´Â? 
 select dept.dept_name
   from departments dept
   where dept.dept_no = (select dept2.dept_no    as fromno
@@ -117,8 +117,8 @@ select dept.dept_name
 						 limit 0, 1);
 
 
--- ë¬¸ì œ7.
--- í‰ê·  ì—°ë´‰ì´ ê°€ì¥ ë†’ì€ ì§ì±…?
+-- ¹®Á¦7.
+-- Æò±Õ ¿¬ºÀÀÌ °¡Àå ³ôÀº Á÷Ã¥?
 select distinct(ttl.title)
   from titles ttl
  where title =  (select ttl2.title
@@ -132,13 +132,13 @@ select distinct(ttl.title)
 				  order by avg(sal2.salary) desc
 				  limit 0, 1);
   
--- ë¬¸ì œ8.
--- í˜„ì¬ ìì‹ ì˜ ë§¤ë‹ˆì €ë³´ë‹¤ ë†’ì€ ì—°ë´‰ì„ ë°›ê³  ìˆëŠ” ì§ì›ì€?
--- ë¶€ì„œì´ë¦„, ì‚¬ì›ì´ë¦„, ì—°ë´‰, ë§¤ë‹ˆì € ì´ë¦„, ë©”ë‹ˆì € ì—°ë´‰ ìˆœìœ¼ë¡œ ì¶œë ¥í•©ë‹ˆë‹¤.
-select dept.dept_name                               as 'ë¶€ì„œì´ë¦„'
-     , concat(emp.first_name, ' ', emp.last_name)   as 'ì´ë¦„'
-     , sal.salary                                   as 'ì—°ë´‰'
-     , mgrs_t.mgrnm                                 as 'ë§¤ë‹ˆì €ì´ë¦„' 
+-- ¹®Á¦8.
+-- ÇöÀç ÀÚ½ÅÀÇ ¸Å´ÏÀúº¸´Ù ³ôÀº ¿¬ºÀÀ» ¹Ş°í ÀÖ´Â Á÷¿øÀº?
+-- ºÎ¼­ÀÌ¸§, »ç¿øÀÌ¸§, ¿¬ºÀ, ¸Å´ÏÀú ÀÌ¸§, ¸Ş´ÏÀú ¿¬ºÀ ¼øÀ¸·Î Ãâ·ÂÇÕ´Ï´Ù.
+select dept.dept_name                               as 'ºÎ¼­ÀÌ¸§'
+     , concat(emp.first_name, ' ', emp.last_name)   as 'ÀÌ¸§'
+     , sal.salary                                   as '¿¬ºÀ'
+     , mgrs_t.mgrnm                                 as '¸Å´ÏÀúÀÌ¸§' 
   from departments dept, dept_emp demp, employees emp, salaries sal, (select dmgr2.dept_no as 'mgrdno'
                                                                            , concat(emp2.first_name, ' ', emp2.last_name)   as 'mgrnm' 
 																		   , sal2.salary   as 'mgrs'
